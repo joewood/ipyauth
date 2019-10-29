@@ -34,7 +34,7 @@ const startAuthFlowInPopup = (authUrl, readMessage, name, windowProps = null) =>
     return ref;
 };
 
-function startAuthFlow(that, mode, prompt) {
+function startAuthFlow(that, mode, prompt) {    
     console.log('start startAuthFlow');
 
     // init
@@ -147,7 +147,8 @@ const buidReadMessage = that => {
     return readMessage;
 };
 
-const login = that => startAuthFlow(that, 'iframe', 'none');
+// for now skip iframe step - will revert
+const login = that => startAuthFlow(that, 'popup', 'none');
 
 const updateDisplay = (that, objCreds) => {
     console.log('start updateDisplay');

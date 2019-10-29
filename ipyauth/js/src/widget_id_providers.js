@@ -2,6 +2,31 @@ import axios from 'axios';
 
 import util from './widget_util';
 
+const spotify = {
+    name: 'spotify',
+    authorize_endpoint: 'https://accounts.spotify.com/authorize',
+    url_params: {
+        response_type: 'token',
+        redirect_uri: 'my-redirect-uri',
+        client_id: 'my-client-id',
+        scope: 'my-scopes',
+        state: 'my-state',
+    },
+    scope_separator: ' ',
+    isJWT: false,
+    isValid: (params, creds) => {
+        return new Promise((resolve, reject) => {
+            // same nonce
+            const b = creds.statusAuth === "ok"
+            creds.username = "User" // tbd
+            creds.expiry = new Date(new Date().getTime() + parseInt(creds.expires_in)*1000)
+            creds.scope = params.url_params.scope;
+            resolve([b,creds])
+        });
+    },
+};
+
+
 const sgconnectPRD = {
     name: 'sgconnectPRD',
     authorize_endpoint: 'https://sso.sgmarkets.com/sgconnect/oauth2/authorize',
@@ -159,6 +184,7 @@ const google = {
 export default {
     sgconnectPRD,
     sgconnectHOM,
+    spotify,
     auth0,
     google,
 };
